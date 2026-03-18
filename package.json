@@ -1,0 +1,55 @@
+{
+  "name": "pi-render",
+  "version": "1.0.0",
+  "description": "Extension pour pi-coding-agent — affiche des pages HTML interactives dans le navigateur et les sauvegarde automatiquement",
+  "keywords": [
+    "pi-extension",
+    "pi-agent",
+    "pi-coding-agent",
+    "visualization",
+    "charts",
+    "diagrams",
+    "html",
+    "svg",
+    "interactive",
+    "live-reload"
+  ],
+  "author": "",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/user/pi-render.git"
+  },
+  "bugs": {
+    "url": "https://github.com/user/pi-render/issues"
+  },
+  "homepage": "https://github.com/user/pi-render#readme",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "lint": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "marked": "^12.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.0.0",
+    "prettier": "^3.2.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

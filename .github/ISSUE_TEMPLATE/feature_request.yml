@@ -1,0 +1,57 @@
+name: ✨ Feature Request
+description: Proposer une nouvelle fonctionnalité
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de proposer vos idées pour améliorer pi-render !
+        
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problème à résoudre
+      description: Décrivez le problème ou la limitation actuelle.
+      placeholder: "Je voudrais pouvoir..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution proposée
+      description: Décrivez la solution que vous aimeriez.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives envisagées
+      description: Avez-vous envisagé d'autres solutions ?
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Exemples d'usage
+      description: Montrez comment cette fonctionnalité serait utilisée.
+      placeholder: |
+        render_visual({
+          title: "...",
+          content: "..."
+        })
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type de fonctionnalité
+      options:
+        - Nouveau composant SVG
+        - Amélioration de l'interface
+        - Nouvelle route API
+        - Amélioration des performances
+        - Documentation
+        - Autre
+    validations:
+      required: true
