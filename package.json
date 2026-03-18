@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/ElieMessieCode/pi-render#readme",
   "scripts": {
-    "build": "tsc && cp src/prompt.txt dist/prompt.txt",
+    "build": "tsc && node -e \"require('fs').copyFileSync('src/prompt.txt','dist/prompt.txt')\"",
     "dev": "tsx watch src/index.ts",
     "lint": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.ts\"",
