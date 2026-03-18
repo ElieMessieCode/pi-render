@@ -1,6 +1,6 @@
 {
   "name": "@eliemessiecode/pi-render",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Extension for pi-coding-agent — displays interactive HTML pages in the browser and auto-saves them",
   "keywords": [
     "pi-package",
