@@ -10,7 +10,7 @@
 
 ```bash
 # Via pi-coding-agent
-pi start -- -e "npm:pi-render"
+pi start -- -e "npm:@eliemessiecode/pi-render"
 ```
 
 ## 🚀 How it works

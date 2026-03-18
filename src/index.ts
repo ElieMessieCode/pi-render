@@ -250,6 +250,10 @@ export default function piRender(api: ExtensionAPI): void {
   api.on("session_end",    () => { shutdown("session_end");    });
   api.on("session_switch", () => { shutdown("session_switch"); });
 
+  // Track server state for better error messages
+  let serverReady = false;
+  let serverError: string | null = null;
+
   api.registerTool(
     {
       name: "render_visual",
@@ -288,6 +292,14 @@ export default function piRender(api: ExtensionAPI): void {
       const { title = "Untitled", content } = input as { title: string; content: string };
 
       logger.info(`render_visual called: "${title}"`, "tool");
+
+      // Check if there was a server startup error
+      if (serverError) {
+        return { 
+          success: false, 
+          error: `pi-render server failed to start: ${serverError}. Please check if port ${PORT} is available.` 
+        };
+      }
 
       if (!content || typeof content !== "string") {
         logger.warn("render_visual: content missing or invalid", "tool");
@@ -376,10 +388,12 @@ export default function piRender(api: ExtensionAPI): void {
 
   startServer()
     .then(() => {
+      serverReady = true;
       api.log(`🎨 pi-render ready → ${BASE_URL}  |  🐛 debug → ${BASE_URL}/debug`);
       logger.info(`Ready. Renders dir: ${RENDERS_DIR}`, "init");
     })
     .catch((err: Error) => {
+      serverError = err.message;
       logger.fatal(`Server startup failed`, "init", err);
       api.log(`❌ pi-render: startup failed — ${err.message}`);
     });
