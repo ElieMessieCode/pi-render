@@ -1,7 +1,12 @@
-import * as fs   from "fs";
-import * as path from "path";
-import * as os   from "os";
-import { ExtensionAPI, Visual, ContextEvent, Message } from "./types.js";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import * as os from "node:os";
+import type { 
+  ExtensionAPI, 
+  ContextEvent,
+  ExtensionContext,
+  Visual 
+} from "./types.js";
 import { startServer, closeServer, PORT, BASE_URL, history } from "./server.js";
 import { openBrowser } from "./browser.js";
 import { logger } from "./logger.js";
@@ -222,14 +227,19 @@ let browserOpened = false;
 export default function piRender(api: ExtensionAPI): void {
   logger.info("pi-render extension started", "init");
 
-  api.on("context", (event: ContextEvent) => {
+  // Inject system prompt into LLM context
+  api.on("context", (event: ContextEvent, _ctx: ExtensionContext) => {
     try {
-      const messages: Message[] = [...event.messages];
+      const messages = [...event.messages];
       const alreadyInjected = messages.some(m =>
         typeof m.content === "string" && (m.content as string).includes("PI-RENDER ACTIVE")
       );
       if (!alreadyInjected) {
-        messages.unshift({ role: "user", content: SYSTEM_PROMPT, timestamp: Date.now() });
+        messages.unshift({ 
+          role: "user", 
+          content: SYSTEM_PROMPT, 
+          timestamp: Date.now() 
+        });
         logger.debug("System prompt injected into LLM context", "context");
       }
       return { messages };
@@ -239,6 +249,7 @@ export default function piRender(api: ExtensionAPI): void {
     }
   });
 
+  // Cleanup on session shutdown
   const shutdown = async (reason: string) => {
     logger.warn(`Shutdown triggered by: ${reason}`, "lifecycle");
     try {
@@ -247,15 +258,13 @@ export default function piRender(api: ExtensionAPI): void {
       logger.error("Error closing server", "lifecycle", err);
     }
   };
-  api.on("session_end",    () => { shutdown("session_end");    });
-  api.on("session_switch", () => { shutdown("session_switch"); });
+  api.on("session_shutdown", () => { shutdown("session_shutdown"); });
 
   // Track server state for better error messages
   let serverReady = false;
   let serverError: string | null = null;
 
-  api.registerTool(
-    {
+  api.registerTool({
       name: "render_visual",
       description: [
         "Displays an interactive HTML page in the user's browser and auto-saves it to ~/.pi/agent/renders/.",
@@ -272,7 +281,7 @@ export default function piRender(api: ExtensionAPI): void {
         "A single page can combine multiple content types:",
         "SVG charts + tables + cards + code + timeline = ONE render_visual() call.",
       ].join("\n"),
-      input_schema: {
+      schema: {
         type: "object",
         properties: {
           title: {
@@ -285,11 +294,11 @@ export default function piRender(api: ExtensionAPI): void {
           },
         },
         required: ["title", "content"],
-      },
+      } as const,
     },
 
-    async (input) => {
-      const { title = "Untitled", content } = input as { title: string; content: string };
+    async (input: Record<string, unknown>, _ctx: ExtensionContext) => {
+      const { title = "Untitled", content } = input as { title?: string; content: string };
 
       logger.info(`render_visual called: "${title}"`, "tool");
 
