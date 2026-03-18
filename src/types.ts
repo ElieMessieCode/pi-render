@@ -68,7 +68,4 @@ export interface ExtensionAPI {
   
   /** Register a tool that the LLM can call */
   registerTool(definition: ToolDefinition, handler: (input: Record<string, unknown>, ctx: ExtensionContext) => Promise<unknown>): void;
-  
-  /** Log a message to the user */
-  log(message: string): void;
 }

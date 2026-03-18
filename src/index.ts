@@ -374,7 +374,7 @@ export default function piRender(api: ExtensionAPI): void {
           logger.info(`Browser opened → ${BASE_URL}`, "browser");
         } catch (err) {
           logger.warn("Failed to open browser automatically", "browser");
-          api.log(`⚠️  Open manually: ${BASE_URL}`);
+          logger.warn(`⚠️  Open manually: ${BASE_URL}`, "browser");
         }
       }
 
@@ -382,7 +382,7 @@ export default function piRender(api: ExtensionAPI): void {
         `Visual #${history.length} "${title}" added${filePath ? ` → ${path.basename(filePath)}` : ""}`,
         "tool",
       );
-      api.log(`🎨 pi-render → visual "${title}" displayed${filePath ? ` | 💾 ${path.basename(filePath)}` : ""}`);
+      logger.info(`🎨 pi-render → visual "${title}" displayed${filePath ? ` | 💾 ${path.basename(filePath)}` : ""}`, "tool");
 
       return {
         success:  true,
@@ -398,12 +398,12 @@ export default function piRender(api: ExtensionAPI): void {
   startServer()
     .then(() => {
       serverReady = true;
-      api.log(`🎨 pi-render ready → ${BASE_URL}  |  🐛 debug → ${BASE_URL}/debug`);
+      logger.info(`🎨 pi-render ready → ${BASE_URL}  |  🐛 debug → ${BASE_URL}/debug`, "init");
       logger.info(`Ready. Renders dir: ${RENDERS_DIR}`, "init");
     })
     .catch((err: Error) => {
       serverError = err.message;
       logger.fatal(`Server startup failed`, "init", err);
-      api.log(`❌ pi-render: startup failed — ${err.message}`);
+      logger.fatal(`❌ pi-render: startup failed — ${err.message}`, "init");
     });
 }
