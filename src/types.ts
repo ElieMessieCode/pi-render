@@ -1,17 +1,11 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// Types partagés — pi-render v2
-// ─────────────────────────────────────────────────────────────────────────────
-
 export interface Visual {
   id: string;
   title: string;
-  content: string;   // HTML final complet
-  filePath: string;  // chemin de sauvegarde .pi/agent/renders/
+  content: string;
+  filePath: string;
   timestamp: string;
-  savedAt: string;   // ISO date
+  savedAt: string;
 }
-
-// ── ExtensionAPI (contrat pi-coding-agent) ─────────────────────────────────────
 
 export interface ToolDefinition {
   name: string;

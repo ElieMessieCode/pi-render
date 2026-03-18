@@ -1,16 +1,11 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// debug-page.ts — HTML de la page /debug
-// Séparé pour garder server.ts lisible
-// ─────────────────────────────────────────────────────────────────────────────
-
 export const DEBUG_PAGE = /* html */`<!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>pi-render · debug</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap');
 
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -21,15 +16,13 @@ export const DEBUG_PAGE = /* html */`<!DOCTYPE html>
   --debug-bg:rgba(77,166,255,.08);--info-bg:rgba(29,185,126,.08);
   --warn-bg:rgba(224,155,61,.08);--error-bg:rgba(224,92,122,.08);--fatal-bg:rgba(192,38,211,.12);
 }
-html,body{height:100%;background:var(--bg);color:var(--ink);font-family:'Syne',sans-serif;overflow:hidden}
+html,body{height:100%;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;overflow:hidden}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border-hi);border-radius:3px}
 
-/* ── Layout ─────────────────────────────────────────────────────────────────── */
 .layout{display:grid;grid-template-rows:52px 52px 1fr;height:100vh}
 
-/* ── Top Bar ────────────────────────────────────────────────────────────────── */
 .topbar{
   display:flex;align-items:center;gap:12px;padding:0 1.25rem;
   background:rgba(7,9,15,.92);backdrop-filter:blur(18px);
@@ -47,7 +40,6 @@ html,body{height:100%;background:var(--bg);color:var(--ink);font-family:'Syne',s
 .nav-link{font-size:11px;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:6px;border:0.5px solid var(--border);transition:all .15s}
 .nav-link:hover{color:var(--ink);border-color:var(--border-hi)}
 
-/* ── Toolbar ────────────────────────────────────────────────────────────────── */
 .toolbar{
   display:flex;align-items:center;gap:8px;padding:0 1.25rem;
   background:var(--surface);border-bottom:0.5px solid var(--border);
@@ -57,7 +49,7 @@ html,body{height:100%;background:var(--bg);color:var(--ink);font-family:'Syne',s
 .f-btn{
   font-size:10px;font-weight:600;padding:3px 10px;border-radius:5px;
   background:transparent;border:0.5px solid var(--border);color:var(--muted);
-  cursor:pointer;font-family:'Syne',sans-serif;letter-spacing:.04em;text-transform:uppercase;
+  cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:.04em;text-transform:uppercase;
   transition:all .15s;white-space:nowrap;
 }
 .f-btn:hover{color:var(--ink);border-color:var(--border-hi)}
@@ -78,7 +70,7 @@ html,body{height:100%;background:var(--bg);color:var(--ink);font-family:'Syne',s
 .tb-btn{
   font-size:10px;font-weight:500;padding:4px 12px;border-radius:5px;
   background:transparent;border:0.5px solid var(--border);color:var(--muted);
-  cursor:pointer;font-family:'Syne',sans-serif;transition:all .15s;white-space:nowrap;
+  cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;white-space:nowrap;
 }
 .tb-btn:hover{background:var(--card2);color:var(--ink);border-color:var(--border-hi)}
 .tb-btn.danger{color:var(--error)}
@@ -94,10 +86,8 @@ html,body{height:100%;background:var(--bg);color:var(--ink);font-family:'Syne',s
 .stat.s-error span{color:var(--error)}
 .stat.s-fatal span{color:var(--fatal)}
 
-/* ── Log Area ────────────────────────────────────────────────────────────────── */
 .log-area{overflow-y:auto;padding:.5rem 0}
 
-/* ── Log Row ────────────────────────────────────────────────────────────────── */
 .row{
   display:grid;
   grid-template-columns:52px 56px 70px 1fr;
@@ -121,7 +111,6 @@ html,body{height:100%;background:var(--bg);color:var(--ink);font-family:'Syne',s
 .lvl-ERROR{background:var(--error-bg);color:var(--error)}
 .lvl-FATAL{background:var(--fatal-bg);color:var(--fatal)}
 
-/* ── Row detail ──────────────────────────────────────────────────────────────── */
 .detail{
   display:none;grid-column:1/-1;
   background:var(--surface);border:0.5px solid var(--border);border-radius:8px;
@@ -129,7 +118,7 @@ html,body{height:100%;background:var(--bg);color:var(--ink);font-family:'Syne',s
 }
 .row.expanded + .detail{display:block}
 .d-row{display:flex;gap:8px;margin-bottom:6px;font-size:11px}
-.d-label{color:var(--hint);font-family:'Syne',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.06em;min-width:64px;flex-shrink:0}
+.d-label{color:var(--hint);font-family:'Inter',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.06em;min-width:64px;flex-shrink:0}
 .d-val{font-family:'Source Code Pro',monospace;color:var(--muted);word-break:break-all}
 .d-val.hi{color:var(--ink)}
 pre.stack{
@@ -138,17 +127,14 @@ pre.stack{
   line-height:1.65;margin-top:4px;white-space:pre-wrap;word-break:break-word;
 }
 
-/* ── Empty ───────────────────────────────────────────────────────────────────── */
 .empty-log{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   height:calc(100% - 4rem);gap:10px;color:var(--hint);font-size:13px;text-align:center;
 }
 .empty-log code{font-size:11px;background:var(--card);border:0.5px solid var(--border);padding:3px 8px;border-radius:4px;color:var(--muted)}
 
-/* ── Context pill ────────────────────────────────────────────────────────────── */
 .ctx{display:inline-block;font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,.05);color:var(--muted);margin-right:6px}
 
-/* ── New badge ───────────────────────────────────────────────────────────────── */
 @keyframes newrow{from{background:rgba(29,185,126,.15)}to{background:transparent}}
 .row.new-entry{animation:newrow 1.2s ease}
 </style>
@@ -156,7 +142,6 @@ pre.stack{
 <body>
 <div class="layout">
 
-<!-- Top Bar -->
 <div class="topbar">
   <div class="logo">
     <div class="logo-box">🐛</div>
@@ -164,13 +149,12 @@ pre.stack{
   </div>
   <div class="gap"></div>
   <div class="live-badge"><div class="dot" id="dot"></div><span id="lbl">connecting…</span></div>
-  <a href="/" class="nav-link">↖ Visuels</a>
+  <a href="/" class="nav-link">↖ Visuals</a>
 </div>
 
-<!-- Toolbar -->
 <div class="toolbar">
   <div class="filter-group">
-    <button class="f-btn active-all" data-filter="ALL"  onclick="setFilter('ALL',this)">Tous</button>
+    <button class="f-btn active-all" data-filter="ALL"  onclick="setFilter('ALL',this)">All</button>
     <button class="f-btn" data-filter="DEBUG" onclick="setFilter('DEBUG',this)">Debug</button>
     <button class="f-btn" data-filter="INFO"  onclick="setFilter('INFO',this)">Info</button>
     <button class="f-btn" data-filter="WARN"  onclick="setFilter('WARN',this)">Warn</button>
@@ -178,11 +162,11 @@ pre.stack{
     <button class="f-btn" data-filter="FATAL" onclick="setFilter('FATAL',this)">Fatal</button>
   </div>
   <div class="sep"></div>
-  <input class="search-box" type="text" placeholder="Rechercher…" oninput="setSearch(this.value)" id="search">
+  <input class="search-box" type="text" placeholder="Search…" oninput="setSearch(this.value)" id="search">
   <div class="sep"></div>
   <button class="tb-btn auto-scroll-btn on" id="asBtn" onclick="toggleAutoScroll()">⬇ Auto-scroll</button>
-  <button class="tb-btn" onclick="copyAll()">⎘ Copier tout</button>
-  <button class="tb-btn danger" onclick="clearLogs()">✕ Vider</button>
+  <button class="tb-btn" onclick="copyAll()">⎘ Copy all</button>
+  <button class="tb-btn danger" onclick="clearLogs()">✕ Clear</button>
   <div class="stats">
     <div class="stat s-debug">DEBUG <span id="c-debug">0</span></div>
     <div class="stat s-info" >INFO  <span id="c-info">0</span></div>
@@ -193,25 +177,22 @@ pre.stack{
   </div>
 </div>
 
-<!-- Log Area -->
 <div class="log-area" id="logArea">
   <div class="empty-log" id="emptyMsg">
     <div style="font-size:28px">🔍</div>
-    <div>En attente de logs…</div>
+    <div>Waiting for logs…</div>
     <code>localhost:3847/debug</code>
   </div>
 </div>
 
 </div>
 <script>
-// ── State ─────────────────────────────────────────────────────────────────────
 let allLogs = [];
 let filter  = 'ALL';
 let search  = '';
 let autoScroll = true;
 let expandedId = null;
 
-// ── SSE ───────────────────────────────────────────────────────────────────────
 function connect() {
   const sse = new EventSource('/sse/debug');
   sse.onopen  = () => setLive(true);
@@ -238,10 +219,9 @@ function connect() {
 
 function setLive(ok) {
   document.getElementById('dot').className = ok ? 'dot' : 'dot off';
-  document.getElementById('lbl').textContent = ok ? 'connecté' : 'reconnexion…';
+  document.getElementById('lbl').textContent = ok ? 'connected' : 'reconnecting…';
 }
 
-// ── Render ────────────────────────────────────────────────────────────────────
 function matches(e) {
   if (filter !== 'ALL' && e.level !== filter) return false;
   if (!search) return true;
@@ -256,7 +236,6 @@ function renderAll() {
   const empty = document.getElementById('emptyMsg');
   const visible = allLogs.filter(matches);
   empty.style.display = visible.length ? 'none' : 'flex';
-  // Clear et recréer
   area.innerHTML = '';
   if (!visible.length) { area.appendChild(empty); return; }
   area.appendChild(empty);
@@ -287,7 +266,6 @@ function makeRow(e, isNew) {
   row.onclick = () => toggleRow(e, row);
   frag.appendChild(row);
 
-  // Detail panel (toujours créé, hidden par CSS)
   const det = document.createElement('div');
   det.className = 'detail';
   det.dataset.detailFor = e.id;
@@ -300,12 +278,12 @@ function makeRow(e, isNew) {
 function buildDetail(e) {
   let html = '';
   html += row_d('ID',      '#' + e.id, true);
-  html += row_d('Niveau',  e.level, true);
-  html += row_d('Heure',   e.ts + ' (' + e.elapsed + 'ms)');
+  html += row_d('Level',   e.level, true);
+  html += row_d('Time',    e.ts + ' (' + e.elapsed + 'ms)');
   html += row_d('ISO',     e.tsISO);
-  if (e.context) html += row_d('Contexte', e.context, true);
+  if (e.context) html += row_d('Context', e.context, true);
   html += row_d('Message', e.message, true);
-  if (e.detail)  html += row_d('Détail',   e.detail);
+  if (e.detail)  html += row_d('Detail',  e.detail);
   if (e.stack)   html += \`<div class="d-row"><span class="d-label">Stack</span><div><pre class="stack">\${esc(e.stack)}</pre></div></div>\`;
   return html;
 }
@@ -315,7 +293,6 @@ function row_d(label, val, hi=false) {
 
 function toggleRow(e, rowEl) {
   const area = document.getElementById('logArea');
-  // Ferme le précédent
   if (expandedId !== null && expandedId !== e.id) {
     const prev = area.querySelector(\`.row[data-id="\${expandedId}"]\`);
     if (prev) prev.classList.remove('expanded');
@@ -324,7 +301,6 @@ function toggleRow(e, rowEl) {
   expandedId = isOpen ? e.id : null;
 }
 
-// ── Stats ─────────────────────────────────────────────────────────────────────
 function updateStats() {
   const counts = { DEBUG:0, INFO:0, WARN:0, ERROR:0, FATAL:0 };
   allLogs.forEach(e => { if (counts[e.level] !== undefined) counts[e.level]++; });
@@ -334,7 +310,6 @@ function updateStats() {
   document.getElementById('c-total').textContent = allLogs.length;
 }
 
-// ── Controls ──────────────────────────────────────────────────────────────────
 function setFilter(f, btn) {
   filter = f;
   document.querySelectorAll('.f-btn').forEach(b => {
@@ -370,7 +345,7 @@ function copyAll() {
   const txt = allLogs.map(e =>
     \`[\${e.ts}] [\${e.level}] \${e.context ? '['+e.context+'] ' : ''}\${e.message}\${e.detail ? ' — '+e.detail : ''}\`
   ).join('\\n');
-  navigator.clipboard.writeText(txt).then(() => flash('✓ Logs copiés'));
+  navigator.clipboard.writeText(txt).then(() => flash('✓ Logs copied'));
 }
 
 function flash(msg) {
@@ -384,7 +359,6 @@ function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── Init ──────────────────────────────────────────────────────────────────────
 connect();
 </script>
 </body>

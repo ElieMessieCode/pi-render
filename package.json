@@ -1,7 +1,7 @@
 {
   "name": "pi-render",
   "version": "1.0.0",
-  "description": "Extension pour pi-coding-agent — affiche des pages HTML interactives dans le navigateur et les sauvegarde automatiquement",
+  "description": "Extension for pi-coding-agent — displays interactive HTML pages in the browser and auto-saves them",
   "keywords": [
     "pi-extension",
     "pi-agent",

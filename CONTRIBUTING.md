@@ -1,108 +1,108 @@
-# Contributing à pi-render
+# Contributing to pi-render
 
-Merci de votre intérêt pour contribuer à pi-render ! 🎨
+Thank you for your interest in contributing to pi-render! 🎨
 
-## 📋 Prérequis
+## 📋 Prerequisites
 
 - Node.js >= 18
-- npm ou yarn
+- npm or yarn
 - Git
 
-## 🚀 Installation pour le développement
+## 🚀 Development Setup
 
 ```bash
-# Cloner le repository
-git clone https://github.com/user/pi-render.git
+# Clone the repository
+git clone https://github.com/ElieMessieCode/pi-render.git
 cd pi-render
 
-# Installer les dépendances
+# Install dependencies
 npm install
 
-# Lancer le mode développement
+# Run in development mode
 npm run dev
 ```
 
-## 🏗️ Architecture du code
+## 🏗️ Code Architecture
 
 ```
 src/
-├── index.ts       # Point d'entrée, system prompt, enregistrement du tool
-├── server.ts      # Serveur Express, routes API, SSE, interface HTML
-├── browser.ts     # Ouverture cross-platform du navigateur
-├── logger.ts      # Logger central avec broadcast SSE
-├── debug-page.ts  # Page HTML pour le debug
-└── types.ts       # Interfaces TypeScript partagées
+├── index.ts       # Entry point, system prompt, tool registration
+├── server.ts      # Express server, API routes, SSE, HTML interface
+├── browser.ts     # Cross-platform browser opener
+├── logger.ts      # Central logger with SSE broadcast
+├── debug-page.ts  # HTML debug page
+└── types.ts       # Shared TypeScript interfaces
 ```
 
-## 📝 Convention de code
+## 📝 Code Conventions
 
-- **TypeScript strict** — pas de `any` sans justification
-- **ES2020 target** — syntaxe moderne mais compatible Node 18+
-- **2 espaces** pour l'indentation
-- **PascalCase** pour les interfaces/types
-- **camelCase** pour les variables et fonctions
-- **UPPER_CASE** pour les constantes
+- **Strict TypeScript** — no `any` without justification
+- **ES2020 target** — modern syntax, Node 18+ compatible
+- **2 spaces** for indentation
+- **PascalCase** for interfaces/types
+- **camelCase** for variables and functions
+- **UPPER_CASE** for constants
 
-## 🔄 Workflow de développement
+## 🔄 Development Workflow
 
-1. **Fork** le repository
-2. **Créer une branche** depuis `main` :
+1. **Fork** the repository
+2. **Create a branch** from `main`:
    ```bash
-   git checkout -b feat/ma-fonctionnalite
+   git checkout -b feat/my-feature
    ```
-3. **Effectuer vos modifications**
-4. **Tester** :
+3. **Make your changes**
+4. **Test**:
    ```bash
    npm run build
    ```
-5. **Commiter** avec un message conventionnel :
+5. **Commit** with a conventional message:
    ```bash
-   git commit -m "feat: ajoute nouvelle option de rendu"
+   git commit -m "feat: add new render option"
    ```
-6. **Push** et créer une Pull Request
+6. **Push** and create a Pull Request
 
-## 📌 Convention de commits
+## 📌 Commit Convention
 
-Nous utilisons [Conventional Commits](https://www.conventionalcommits.org/) :
+We use [Conventional Commits](https://www.conventionalcommits.org/):
 
 | Type | Description |
 |------|-------------|
-| `feat` | Nouvelle fonctionnalité |
-| `fix` | Correction de bug |
-| `docs` | Documentation |
-| `style` | Formatage, pas de changement de logique |
-| `refactor` | Refactoring sans changement de fonctionnalité |
-| `perf` | Amélioration de performance |
-| `test` | Ajout/modification de tests |
-| `chore` | Tâches de maintenance |
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `docs` | Documentation changes |
+| `style` | Formatting, no logic change |
+| `refactor` | Code refactoring without feature change |
+| `perf` | Performance improvement |
+| `test` | Adding/updating tests |
+| `chore` | Maintenance tasks |
 
-Exemples :
+Examples:
 ```
-feat: ajout du support des graphiques en camembert
-fix: correction du crash lors du redémarrage serveur
-docs: mise à jour du README avec exemples
+feat: add pie chart SVG support
+fix: fix crash on server restart
+docs: update README with examples
 ```
 
-## 🐛 Signaler un bug
+## 🐛 Reporting Bugs
 
-1. Vérifier que le bug n'est pas déjà signalé dans [Issues](https://github.com/user/pi-render/issues)
-2. Créer une nouvelle Issue avec :
-   - Titre descriptif
-   - Étapes pour reproduire
-   - Comportement attendu vs obtenu
-   - Version de pi-render
-   - Logs éventuels (page `/debug`)
+1. Check if the bug is already reported in [Issues](https://github.com/ElieMessieCode/pi-render/issues)
+2. Create a new Issue with:
+   - Descriptive title
+   - Steps to reproduce
+   - Expected vs actual behavior
+   - pi-render version
+   - Logs if available (from `/debug` page)
 
-## 💡 Proposer une fonctionnalité
+## 💡 Feature Requests
 
-1. Ouvrir une Issue avec le tag `[feature]`
-2. Décrire le cas d'usage et la motivation
-3. Proposer une implémentation si possible
+1. Open an Issue with the `[feature]` tag
+2. Describe the use case and motivation
+3. Propose an implementation if possible
 
-## 📄 Licence
+## 📄 License
 
-En contribuant, vous acceptez que vos contributions soient licenciées sous la licence MIT du projet.
+By contributing, you agree that your contributions will be licensed under the project's MIT License.
 
 ---
 
-Merci pour votre contribution ! 🙏
+Thank you for your contribution! 🙏

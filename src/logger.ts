@@ -1,34 +1,25 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// logger.ts — Logger central de pi-render
-// Capture tout : logs applicatifs, erreurs Express, exceptions non gérées,
-// rejets de promesses. Diffuse en temps réel via SSE vers /debug.
-// ─────────────────────────────────────────────────────────────────────────────
-
 export type LogLevel = "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL";
 
 export interface LogEntry {
   id:        number;
   level:     LogLevel;
   message:   string;
-  context?:  string;       // module source (ex: "server", "tool", "render")
-  detail?:   string;       // info supplémentaire ou valeur JSON
-  stack?:    string;       // stack trace pour les erreurs
-  ts:        string;       // HH:MM:SS.mmm
-  tsISO:     string;       // ISO complet pour le tri
-  elapsed:   number;       // ms depuis le démarrage de l'extension
+  context?:  string;
+  detail?:   string;
+  stack?:    string;
+  ts:        string;
+  tsISO:     string;
+  elapsed:   number;
 }
 
-// ── State ─────────────────────────────────────────────────────────────────────
 const MAX_ENTRIES = 2000;
 const logs: LogEntry[] = [];
 let   seq          = 0;
 const startedAt    = Date.now();
 let   debugClients: import("http").ServerResponse[] = [];
 
-// ── SSE clients ───────────────────────────────────────────────────────────────
 export function addDebugClient(res: import("http").ServerResponse): void {
   debugClients.push(res);
-  // Envoie l'historique complet au nouveau client
   const payload = JSON.stringify({ type: "history", logs });
   res.write(`data: ${payload}\n\n`);
 }
@@ -43,7 +34,6 @@ function broadcastLog(entry: LogEntry): void {
   debugClients.forEach(c => { try { c.write(payload); } catch { removeDebugClient(c); } });
 }
 
-// ── Core ──────────────────────────────────────────────────────────────────────
 function ts(): { ts: string; tsISO: string } {
   const now = new Date();
   const h   = String(now.getHours()).padStart(2, "0");
@@ -80,7 +70,6 @@ function push(
   return entry;
 }
 
-// ── API publique ──────────────────────────────────────────────────────────────
 export const logger = {
   debug(message: string, context?: string, detail?: string): void {
     push("DEBUG", message, context, detail);
@@ -113,16 +102,12 @@ export const logger = {
   clear(): void { logs.length = 0; seq = 0; },
 };
 
-// ── Interception globale ──────────────────────────────────────────────────────
-// Capture les erreurs non attrapées dans toute l'extension
-
 process.on("uncaughtException", (err: Error) => {
   logger.fatal(
-    `Exception non capturée : ${err.message}`,
+    `Uncaught exception: ${err.message}`,
     "process",
     err,
   );
-  // Laisse pi-agent gérer le crash — on ne force pas process.exit ici
 });
 
 process.on("unhandledRejection", (reason: unknown) => {
@@ -130,13 +115,12 @@ process.on("unhandledRejection", (reason: unknown) => {
     ? reason.message
     : String(reason);
   logger.fatal(
-    `Promesse rejetée non gérée : ${message}`,
+    `Unhandled promise rejection: ${message}`,
     "process",
     reason instanceof Error ? reason : new Error(String(reason)),
   );
 });
 
-// Interception de console.warn/error pour les capturer dans le logger aussi
 const _consoleWarn  = console.warn.bind(console);
 const _consoleError = console.error.bind(console);
 

@@ -1,41 +1,41 @@
 name: ✨ Feature Request
-description: Proposer une nouvelle fonctionnalité
+description: Suggest a new feature
 title: "[Feature]: "
 labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        Merci de proposer vos idées pour améliorer pi-render !
+        Thank you for suggesting improvements to pi-render!
         
   - type: textarea
     id: problem
     attributes:
-      label: Problème à résoudre
-      description: Décrivez le problème ou la limitation actuelle.
-      placeholder: "Je voudrais pouvoir..."
+      label: Problem to Solve
+      description: Describe the current problem or limitation.
+      placeholder: "I would like to be able to..."
     validations:
       required: true
 
   - type: textarea
     id: solution
     attributes:
-      label: Solution proposée
-      description: Décrivez la solution que vous aimeriez.
+      label: Proposed Solution
+      description: Describe the solution you'd like.
     validations:
       required: true
 
   - type: textarea
     id: alternatives
     attributes:
-      label: Alternatives envisagées
-      description: Avez-vous envisagé d'autres solutions ?
+      label: Alternatives Considered
+      description: Have you considered any alternative solutions?
 
   - type: textarea
     id: examples
     attributes:
-      label: Exemples d'usage
-      description: Montrez comment cette fonctionnalité serait utilisée.
+      label: Usage Examples
+      description: Show how this feature would be used.
       placeholder: |
         render_visual({
           title: "...",
@@ -45,13 +45,13 @@ body:
   - type: dropdown
     id: type
     attributes:
-      label: Type de fonctionnalité
+      label: Feature Type
       options:
-        - Nouveau composant SVG
-        - Amélioration de l'interface
-        - Nouvelle route API
-        - Amélioration des performances
+        - New SVG component
+        - UI improvement
+        - New API route
+        - Performance improvement
         - Documentation
-        - Autre
+        - Other
     validations:
       required: true

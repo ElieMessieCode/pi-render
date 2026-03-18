@@ -2,40 +2,40 @@
 
 ## 🛡️ Support
 
-| Version | Supporté         |
-| ------- | ---------------- |
-| 1.x.x   | ✅ Actif         |
+| Version | Status      |
+| ------- | ----------- |
+| 1.x.x   | ✅ Active   |
 
-## 🔒 Signaler une vulnérabilité
+## 🔒 Reporting a Vulnerability
 
-**NE PAS ouvrir une issue publique pour une vulnérabilité de sécurité.**
+**DO NOT open a public issue for security vulnerabilities.**
 
-Merci de signaler les vulnérabilités de sécurité de manière responsable :
+Please report security vulnerabilities responsibly:
 
-1. **Envoyez un email** à : security@example.com
-2. **Ou utilisez** [GitHub Security Advisories](https://github.com/user/pi-render/security/advisories/new)
+1. **Email** to: security@example.com
+2. **Or use** [GitHub Security Advisories](https://github.com/ElieMessieCode/pi-render/security/advisories/new)
 
-Incluez dans votre rapport :
+Include in your report:
 
-- Description détaillée de la vulnérabilité
-- Étapes pour reproduire
-- Impact potentiel
-- Solution suggérée (si applicable)
+- Detailed description of the vulnerability
+- Steps to reproduce
+- Potential impact
+- Suggested fix (if applicable)
 
-## 📋 Ce qui constitue une vulnérabilité
+## 📋 What Constitutes a Vulnerability
 
-- Exécution de code arbitraire
-- Injection XSS via le contenu HTML
-- Accès non autorisé au système de fichiers
-- Exposition de données sensibles
-- Bypass des restrictions du sandbox iframe
+- Arbitrary code execution
+- XSS injection via HTML content
+- Unauthorized file system access
+- Sensitive data exposure
+- iframe sandbox bypass
 
-## ⏱️ Délai de réponse
+## ⏱️ Response Time
 
-- **Confirmation** : Sous 48h
-- **Évaluation** : Sous 1 semaine
-- **Correction** : Variable selon la sévérité
+- **Acknowledgment**: Within 48 hours
+- **Assessment**: Within 1 week
+- **Fix**: Varies by severity
 
-## 🙏 Remerciements
+## 🙏 Acknowledgments
 
-Merci à tous les chercheurs en sécurité qui contribuent à rendre pi-render plus sûr.
+Thank you to all security researchers who help make pi-render safer.

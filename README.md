@@ -1,6 +1,6 @@
 # 🎨 pi-render
 
-> Extension pour **pi-coding-agent** — affiche des pages HTML interactives dans le navigateur et les sauvegarde automatiquement.
+> Extension for **pi-coding-agent** — displays interactive HTML pages in the browser and auto-saves them.
 
 [![npm version](https://img.shields.io/npm/v/pi-render)](https://www.npmjs.com/package/pi-render)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -11,87 +11,85 @@
 ```bash
 # Via pi-coding-agent
 pi start -- -e "npm:pi-render"
-
-# Ou ajoutez directement dans votre configuration
 ```
 
-## 🚀 Principe
+## 🚀 How it works
 
-1. **L'agent génère du HTML+CSS+SVG** auto-contenu (pas de librairies externes)
-2. **pi-render affiche la page** dans le navigateur via un serveur local (`localhost:3847`)
-3. **La page est sauvegardée** dans `~/.pi/agent/renders/TIMESTAMP_titre.html`
-4. **Bouton télécharger** dans l'interface pour sauvegarder dans les Downloads
+1. **The agent generates HTML+CSS+SVG** self-contained (no external libraries)
+2. **pi-render displays the page** in the browser via a local server (`localhost:3847`)
+3. **The page is saved** to `~/.pi/agent/renders/TIMESTAMP_title.html`
+4. **Download button** in the interface to save to browser Downloads
 
-## ✨ Fonctionnalités
+## ✨ Features
 
-| Fonctionnalité | Description |
-|----------------|-------------|
-| 📜 **Historique scrollable** | Chaque visuel dans un bloc collapsible |
-| 🔴 **Live-reload SSE** | Pas besoin de rafraîchir manuellement |
-| ⬇ **Télécharger** | Sauvegarde dans les Downloads du navigateur |
-| ⎘ **Copier HTML** | Source dans le presse-papiers |
-| ↗ **Nouvel onglet** | Affichage plein écran |
-| 💾 **Sauvegarde auto** | Dans `~/.pi/agent/renders/` |
-| 🐛 **Page debug** | Logs temps réel sur `/debug` |
+| Feature | Description |
+|---------|-------------|
+| 📜 **Scrollable history** | Each visual in a collapsible block |
+| 🔴 **Live-reload SSE** | No manual refresh needed |
+| ⬇ **Download** | Save to browser Downloads |
+| ⎘ **Copy HTML** | Copy source to clipboard |
+| ↗ **New tab** | Full-screen viewing |
+| 💾 **Auto-save** | To `~/.pi/agent/renders/` |
+| 🐛 **Debug page** | Real-time logs at `/debug` |
 
-## 📖 Ce qui est injecté dans chaque contexte LLM
+## 📖 System Prompt Injection
 
-Un system prompt détaillé explique à l'agent :
+A detailed system prompt is injected to guide the LLM agent:
 
-- **Quand appeler `render_visual()`** — toujours pour contenu visuel
-- **Les règles HTML+CSS+SVG uniquement** — pas de libs externes
-- **Les patterns recommandés** — graphiques SVG, diagrammes, tabs CSS, cards...
-- **La palette de couleurs dark** — palette prédéfinie cohérente
-- **Des exemples de code** — copy-paste prêts à l'emploi
+- **When to call `render_visual()`** — always for visual content
+- **HTML+CSS+SVG only rules** — no external libraries
+- **Recommended patterns** — SVG charts, diagrams, CSS tabs, cards...
+- **Dark color palette** — predefined consistent theme
+- **Copy-paste code examples** — ready to use
 
-## 📏 Règles du HTML généré
+## 📏 HTML Rules
 
-| ✅ Autorisé | ❌ Interdit |
-|---|---|
+| ✅ Allowed | ❌ Forbidden |
+|-----------|-------------|
 | HTML5 + CSS3 + SVG inline | Chart.js, D3, Bootstrap, React... |
-| Google Fonts (`@import`) | Autres CDN |
-| JavaScript vanilla minimal | `fetch()` vers APIs externes |
+| Google Fonts (`@import`) | Other CDNs |
+| Minimal vanilla JavaScript | `fetch()` to external APIs |
 | CSS animations/transitions | `localStorage`/`sessionStorage` |
-| CSS variables, Grid, Flexbox | Images externes |
+| CSS variables, Grid, Flexbox | External images |
 
-## 🎯 Composants disponibles
+## 🎯 Available Components
 
-Le system prompt fournit des patterns prêts à l'emploi :
+The system prompt provides ready-to-use patterns:
 
-- 📊 **Graphiques en barres** (SVG)
-- 📈 **Graphiques en courbes** (SVG)
-- 🥧 **Camemberts** (SVG stroke-dasharray)
-- 🔀 **Diagrammes de flux** (SVG)
-- 🗂️ **Tabs** (CSS pur avec input radio)
-- 📁 **Accordéon** (HTML natif)
-- 🃏 **Cartes en grille** (CSS Grid)
-- 💻 **Blocs de code** avec syntax highlighting
+- 📊 **Bar charts** (SVG)
+- 📈 **Line charts** (SVG)
+- 🥧 **Pie charts** (SVG stroke-dasharray)
+- 🔀 **Flow diagrams** (SVG)
+- 🗂️ **Tabs** (CSS-only with radio inputs)
+- 📁 **Accordion** (native HTML)
+- 🃏 **Card grids** (CSS Grid)
+- 💻 **Code blocks** with syntax highlighting
 - 📅 **Timeline**
-- 📊 **Métriques / KPI**
+- 📊 **Metrics / KPIs**
 
 ## 🏗️ Architecture
 
 ```
 src/
-├── index.ts       ← export default, system prompt, tool render_visual
-├── server.ts      ← Express + SSE + shell HTML complet
-├── browser.ts     ← ouverture navigateur cross-platform
-├── logger.ts      ← logger central avec SSE
-├── debug-page.ts  ← page de debug HTML
-└── types.ts       ← interfaces TypeScript
-dist/              ← code compilé
+├── index.ts       ← default export, system prompt, render_visual tool
+├── server.ts      ← Express + SSE + complete HTML shell
+├── browser.ts     ← cross-platform browser opener
+├── logger.ts      ← central logger with SSE
+├── debug-page.ts  ← HTML debug page
+└── types.ts       ← TypeScript interfaces
+dist/              ← compiled output
 ```
 
-## 🛠️ Développement
+## 🛠️ Development
 
 ```bash
-# Installer les dépendances
+# Install dependencies
 npm install
 
-# Mode développement (watch)
+# Development mode (watch)
 npm run dev
 
-# Build production
+# Production build
 npm run build
 ```
 
@@ -99,63 +97,62 @@ npm run build
 
 ### Tool: `render_visual`
 
-Affiche une page HTML interactive dans le navigateur.
+Displays an interactive HTML page in the browser.
 
-**Paramètres :**
+**Parameters:**
 
-| Paramètre | Type | Description |
+| Parameter | Type | Description |
 |-----------|------|-------------|
-| `title` | `string` | Titre court et descriptif (utilisé pour le nom du fichier) |
-| `content` | `string` | Code HTML complet de la page |
+| `title` | `string` | Short descriptive title (used for filename) |
+| `content` | `string` | Complete HTML page code |
 
-**Retour :**
+**Returns:**
 
 ```json
 {
   "success": true,
   "url": "http://localhost:3847",
   "debugUrl": "http://localhost:3847/debug",
-  "filePath": "/home/user/.pi/agent/renders/2024-01-15_10-30-00_mon-graphique.html",
+  "filePath": "/home/user/.pi/agent/renders/2024-01-15_10-30-00_my-chart.html",
   "visualId": "1705312200000-abc123",
-  "message": "✅ Page \"Mon Graphique\" affichée..."
+  "message": "✅ Page \"My Chart\" displayed..."
 }
 ```
 
-## 🔗 Routes du serveur
+## 🔗 Server Routes
 
-| Route | Méthode | Description |
-|-------|---------|-------------|
-| `/` | GET | Interface principale avec historique |
-| `/debug` | GET | Page de debug avec logs temps réel |
-| `/sse` | GET | Server-Sent Events pour live-reload |
-| `/sse/debug` | GET | SSE pour les logs de debug |
-| `/add` | POST | Ajouter un nouveau visuel |
-| `/api/history` | GET | Récupérer l'historique JSON |
-| `/api/logs` | GET | Récupérer les logs JSON |
-| `/api/logs/clear` | POST | Vider les logs |
+| Route | Method | Description |
+|-------|--------|-------------|
+| `/` | GET | Main interface with history |
+| `/debug` | GET | Debug page with real-time logs |
+| `/sse` | GET | Server-Sent Events for live-reload |
+| `/sse/debug` | GET | SSE for debug logs |
+| `/add` | POST | Add a new visual |
+| `/api/history` | GET | Get history as JSON |
+| `/api/logs` | GET | Get logs as JSON |
+| `/api/logs/clear` | POST | Clear logs |
 
-## 📝 Exemple d'utilisation
+## 📝 Usage Example
 
 ```typescript
-// L'agent génère automatiquement du contenu comme :
 render_visual({
-  title: "Analyse des ventes Q4",
+  title: "Q4 Sales Analysis",
   content: `<!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
   :root {
     --bg:#0a0d14; --surface:#111520; --accent:#1db97e;
     --ink:#dde3f0; --muted:#7a869e;
   }
-  body { background:var(--bg); color:var(--ink); font-family:'Syne',sans-serif; padding:2rem; }
+  body { background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; padding:2rem; }
   h1 { color:var(--accent); margin-bottom:1rem; }
 </style>
 </head>
 <body>
-  <h1>📊 Ventes Q4 2024</h1>
+  <h1>📊 Q4 2024 Sales</h1>
   <svg viewBox="0 0 400 200">
     <rect x="50" y="100" width="40" height="80" fill="var(--accent)" rx="4"/>
     <rect x="120" y="60" width="40" height="120" fill="var(--accent)" rx="4"/>
@@ -167,16 +164,16 @@ render_visual({
 });
 ```
 
-## 📄 Licence
+## 📄 License
 
 [MIT](LICENSE)
 
-## 👤 Auteur
+## 👤 Author
 
-Développé pour [pi-coding-agent](https://github.com/mariozechner/pi-coding-agent)
+Built for [pi-coding-agent](https://github.com/mariozechner/pi-coding-agent)
 
 ---
 
 <p align="center">
-  Fait avec ❤️ pour pi-coding-agent
+  Made with ❤️ for pi-coding-agent
 </p>

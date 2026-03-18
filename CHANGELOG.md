@@ -1,45 +1,45 @@
 # Changelog
 
-Toutes les changements notables de pi-render seront documentés dans ce fichier.
+All notable changes to pi-render will be documented in this file.
 
-Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
-et ce projet adhere à [Semantic Versioning](https://semver.org/lang/fr/).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
 ### Added
-- Documentation complète du projet
-- Configuration CI/CD GitHub Actions
-- Fichiers de configuration (.editorconfig, .gitignore, .npmignore)
+- Complete project documentation
+- GitHub Actions CI/CD configuration
+- Configuration files (.editorconfig, .gitignore, .npmignore)
 
 ## [1.0.0] - 2024-01-15
 
 ### Added
-- Affichage de pages HTML interactives dans le navigateur
-- Serveur Express avec SSE pour le live-reload
-- Historique scrollable des visuels
-- Sauvegarde automatique dans `~/.pi/agent/renders/`
-- Page de debug avec logs temps réel
-- System prompt injecté pour guider l'agent LLM
-- Patterns SVG recommandés (barres, courbes, camemberts, flux)
-- Composants CSS (tabs, accordéon, grid, cards)
-- Download, copie HTML, ouverture nouvel onglet
-- Logger central avec broadcast SSE
-- Support cross-platform (Windows, macOS, Linux)
-- Palette de couleurs dark prédéfinie
-- Animations CSS recommandées
+- Interactive HTML page display in browser
+- Express server with SSE for live-reload
+- Scrollable visual history
+- Auto-save to `~/.pi/agent/renders/`
+- Debug page with real-time logs
+- System prompt injection for LLM agent guidance
+- Recommended SVG patterns (bars, curves, pie charts, flows)
+- CSS components (tabs, accordion, grid, cards)
+- Download, copy HTML, new tab features
+- Central logger with SSE broadcast
+- Cross-platform support (Windows, macOS, Linux)
+- Predefined dark color palette
+- Recommended CSS animations
 
 ### Technical
-- TypeScript avec ES2020 target
-- Express pour le serveur HTTP
-- Server-Sent Events pour la communication temps réel
-- Gestion des erreurs et logs structurés
-- Hooks d'extension pi-coding-agent (context, session_end, session_switch)
+- TypeScript with ES2020 target
+- Express for HTTP server
+- Server-Sent Events for real-time communication
+- Structured error handling and logging
+- pi-coding-agent extension hooks (context, session_end, session_switch)
 
 ---
 
-## Format des versions
+## Versioning
 
-- **MAJOR** (X.0.0) : Changements incompatibles avec les versions précédentes
-- **MINOR** (0.X.0) : Ajout de fonctionnalités rétrocompatibles
-- **PATCH** (0.0.X) : Corrections de bugs rétrocompatibles
+- **MAJOR** (X.0.0) — Incompatible API changes
+- **MINOR** (0.X.0) — Backward-compatible functionality
+- **PATCH** (0.0.X) — Backward-compatible bug fixes
