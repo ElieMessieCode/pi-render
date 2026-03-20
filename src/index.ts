@@ -14,7 +14,7 @@ const RENDERS_DIR = path.join(os.homedir(), ".pi", "agent", "renders");
 
 function ensureRendersDir(): void {
   try { fs.mkdirSync(RENDERS_DIR, { recursive: true }); }
-  catch (err) { logger.debug("Impossible de creer " + RENDERS_DIR, "fs", err); throw err; }
+  catch (err) { logger.debug("Impossible de creer " + RENDERS_DIR, "fs", (err as Error).message); throw err; }
 }
 
 function saveHtmlFile(title: string, html: string, isoDate: string): string {
@@ -60,7 +60,7 @@ export default function piRender(pi: ExtensionAPI): void {
           : RENDER_INSTRUCTIONS,
       };
     } catch (err) {
-      logger.debug("Erreur dans before_agent_start", "before_agent_start", err);
+      logger.debug("Erreur dans before_agent_start", "before_agent_start", (err as Error).message);
     }
   });
 
@@ -68,7 +68,7 @@ export default function piRender(pi: ExtensionAPI): void {
   pi.on("session_shutdown", async (_event, _ctx) => {
     logger.debug("session_shutdown — fermeture serveur", "lifecycle");
     try { await closeServer(); }
-    catch (err) { logger.debug("Erreur fermeture serveur", "lifecycle", err); }
+    catch (err) { logger.debug("Erreur fermeture serveur", "lifecycle", (err as Error).message); }
   });
 
   // ── Tool render_visual ────────────────────────────────────────────────────
@@ -110,7 +110,7 @@ export default function piRender(pi: ExtensionAPI): void {
 
       try { await startServer(); }
       catch (err) {
-        logger.debug("Impossible de démarrer le serveur", "tool", err);
+        logger.debug("Impossible de démarrer le serveur", "tool", (err as Error).message);
         return {
           content: [{ type: "text", text: `❌ Erreur serveur : ${(err as Error).message}` }],
           details: { error: (err as Error).message },
@@ -123,7 +123,7 @@ export default function piRender(pi: ExtensionAPI): void {
 
       let filePath = "";
       try { filePath = saveHtmlFile(title, content, isoDate); }
-      catch (err) { logger.debug("Sauvegarde impossible", "tool", err); }
+      catch (err) { logger.debug("Sauvegarde impossible", "tool", (err as Error).message); }
 
       const visual: Visual = {
         id:       `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
@@ -145,7 +145,7 @@ export default function piRender(pi: ExtensionAPI): void {
           };
         }
       } catch (err) {
-        logger.debug("Impossible de contacter le serveur local", "tool", err);
+        logger.debug("Impossible de contacter le serveur local", "tool", (err as Error).message);
         return {
           content: [{ type: "text", text: `❌ Serveur local inaccessible : ${(err as Error).message}` }],
           details: { error: (err as Error).message },
@@ -173,5 +173,5 @@ export default function piRender(pi: ExtensionAPI): void {
   // ── Démarrage serveur ─────────────────────────────────────────────────────
   startServer()
     .then(() => logger.info(`Prêt → ${BASE_URL} | debug → ${BASE_URL}/debug | renders → ${RENDERS_DIR}`, "init"))
-    .catch((err: Error) => logger.fatal(`Échec démarrage : ${err.message}`, "init", err));
+    .catch((err: Error) => logger.fatal(`Échec démarrage : ${err.message}`, "init", (err as Error).message));
 }
