@@ -76,11 +76,9 @@ export const logger = {
   },
   info(message: string, context?: string, detail?: string): void {
     push("INFO", message, context, detail);
-    process.stdout.write(`[pi-render] [INFO]  ${context ? `[${context}] ` : ""}${message}\n`);
   },
   warn(message: string, context?: string, detail?: string): void {
     push("WARN", message, context, detail);
-    process.stderr.write(`[pi-render] [WARN]  ${context ? `[${context}] ` : ""}${message}\n`);
   },
   error(message: string, context?: string, err?: unknown): void {
     const stack = err instanceof Error ? err.stack : undefined;
@@ -88,15 +86,11 @@ export const logger = {
       ? `${err.name}: ${err.message}`
       : err !== undefined ? String(err) : undefined;
     push("ERROR", message, context, detail, stack);
-    process.stderr.write(`[pi-render] [ERROR] ${context ? `[${context}] ` : ""}${message}${detail ? ` — ${detail}` : ""}\n`);
-    if (stack) process.stderr.write(`${stack}\n`);
   },
   fatal(message: string, context?: string, err?: unknown): void {
     const stack = err instanceof Error ? err.stack : undefined;
     const detail = err instanceof Error ? `${err.name}: ${err.message}` : err !== undefined ? String(err) : undefined;
     push("FATAL", message, context, detail, stack);
-    process.stderr.write(`[pi-render] [FATAL] ${context ? `[${context}] ` : ""}${message}${detail ? ` — ${detail}` : ""}\n`);
-    if (stack) process.stderr.write(`${stack}\n`);
   },
   getLogs(): LogEntry[] { return [...logs]; },
   clear(): void { logs.length = 0; seq = 0; },
@@ -126,10 +120,8 @@ const _consoleError = console.error.bind(console);
 
 console.warn = (...args: unknown[]) => {
   logger.warn(args.map(String).join(" "), "console");
-  _consoleWarn(...args);
 };
 
 console.error = (...args: unknown[]) => {
   logger.error(args.map(String).join(" "), "console");
-  _consoleError(...args);
 };

@@ -14,7 +14,7 @@ const RENDERS_DIR = path.join(os.homedir(), ".pi", "agent", "renders");
 
 function ensureRendersDir(): void {
   try { fs.mkdirSync(RENDERS_DIR, { recursive: true }); }
-  catch (err) { logger.error("Impossible de creer " + RENDERS_DIR, "fs", err); throw err; }
+  catch (err) { logger.debug("Impossible de creer " + RENDERS_DIR, "fs", err); throw err; }
 }
 
 function saveHtmlFile(title: string, html: string, isoDate: string): string {
@@ -36,7 +36,7 @@ function loadPrompt(): string {
   for (const p of candidates) {
     try { return fs.readFileSync(p, "utf-8").trim(); } catch { /* next */ }
   }
-  logger.warn("prompt.txt introuvable — fallback court utilise", "init");
+  logger.debug("prompt.txt introuvable — fallback court utilise", "init");
   return "PI-RENDER ACTIF : utilise render_visual(title, content) pour afficher des pages HTML interactives dans la charte pi (fond #1a1a18, primary #b75939).";
 }
 
@@ -46,7 +46,7 @@ let browserOpened = false;
 
 // ── Export default ────────────────────────────────────────────────────────────
 export default function piRender(pi: ExtensionAPI): void {
-  logger.info("Extension pi-render démarrée", "init");
+  logger.debug("Extension pi-render démarrée", "init");
 
   // ── before_agent_start — injection dans le vrai system prompt ─────────────
   pi.on("before_agent_start", async (event, _ctx) => {
@@ -60,15 +60,15 @@ export default function piRender(pi: ExtensionAPI): void {
           : RENDER_INSTRUCTIONS,
       };
     } catch (err) {
-      logger.error("Erreur dans before_agent_start", "before_agent_start", err);
+      logger.debug("Erreur dans before_agent_start", "before_agent_start", err);
     }
   });
 
   // ── session_shutdown — fermeture propre ───────────────────────────────────
   pi.on("session_shutdown", async (_event, _ctx) => {
-    logger.warn("session_shutdown — fermeture serveur", "lifecycle");
+    logger.debug("session_shutdown — fermeture serveur", "lifecycle");
     try { await closeServer(); }
-    catch (err) { logger.error("Erreur fermeture serveur", "lifecycle", err); }
+    catch (err) { logger.debug("Erreur fermeture serveur", "lifecycle", err); }
   });
 
   // ── Tool render_visual ────────────────────────────────────────────────────
@@ -98,10 +98,10 @@ export default function piRender(pi: ExtensionAPI): void {
 
     async execute(_toolCallId, params, _signal, _onUpdate, _ctx) {
       const { title, content } = params;
-      logger.info(`render_visual : "${title}"`, "tool");
+      logger.debug(`render_visual : "${title}"`, "tool");
 
       if (!content || content.length < 20) {
-        logger.warn(`Contenu trop court (${content?.length ?? 0} chars)`, "tool");
+        logger.debug(`Contenu trop court (${content?.length ?? 0} chars)`, "tool");
         return {
           content: [{ type: "text", text: "❌ Contenu HTML vide ou trop court." }],
           details: { error: "content invalide" },
@@ -110,7 +110,7 @@ export default function piRender(pi: ExtensionAPI): void {
 
       try { await startServer(); }
       catch (err) {
-        logger.fatal("Impossible de démarrer le serveur", "tool", err);
+        logger.debug("Impossible de démarrer le serveur", "tool", err);
         return {
           content: [{ type: "text", text: `❌ Erreur serveur : ${(err as Error).message}` }],
           details: { error: (err as Error).message },
@@ -123,7 +123,7 @@ export default function piRender(pi: ExtensionAPI): void {
 
       let filePath = "";
       try { filePath = saveHtmlFile(title, content, isoDate); }
-      catch (err) { logger.error("Sauvegarde impossible", "tool", err); }
+      catch (err) { logger.debug("Sauvegarde impossible", "tool", err); }
 
       const visual: Visual = {
         id:       `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
@@ -138,14 +138,14 @@ export default function piRender(pi: ExtensionAPI): void {
         });
         if (!res.ok) {
           const body = await res.text().catch(() => "");
-          logger.error(`POST /add → ${res.status}`, "tool", body);
+          logger.debug(`POST /add → ${res.status}`, "tool", body);
           return {
             content: [{ type: "text", text: `❌ Erreur serveur (${res.status})` }],
             details: { error: `HTTP ${res.status}` },
           };
         }
       } catch (err) {
-        logger.error("Impossible de contacter le serveur local", "tool", err);
+        logger.debug("Impossible de contacter le serveur local", "tool", err);
         return {
           content: [{ type: "text", text: `❌ Serveur local inaccessible : ${(err as Error).message}` }],
           details: { error: (err as Error).message },
@@ -154,11 +154,11 @@ export default function piRender(pi: ExtensionAPI): void {
 
       if (!browserOpened) {
         try { openBrowser(BASE_URL); browserOpened = true; logger.info(`Navigateur → ${BASE_URL}`, "browser"); }
-        catch { logger.warn("Impossible d'ouvrir le navigateur", "browser"); }
+        catch { logger.debug("Impossible d'ouvrir le navigateur", "browser"); }
       }
 
       const fileInfo = filePath ? ` | 💾 ${path.basename(filePath)}` : "";
-      logger.info(`Visuel #${history.length} "${title}" ajouté${fileInfo}`, "tool");
+      logger.debug(`Visuel #${history.length} "${title}" ajouté${fileInfo}`, "tool");
 
       return {
         content: [{
